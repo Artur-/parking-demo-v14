@@ -1,0 +1,51 @@
+<link rel="import" href="bower_components/polymer/polymer.html">
+<link rel="import" href="bower_components/vaadin-ordered-layout/src/vaadin-vertical-layout.html">
+<link rel="import" href="bower_components/vaadin-ordered-layout/src/vaadin-horizontal-layout.html">
+<link rel="import" href="bower_components/vaadin-button/src/vaadin-button.html">
+<link rel="import" href="bower_components/vaadin-tabs/src/vaadin-tabs.html">
+<link rel="import" href="bower_components/vaadin-tabs/src/vaadin-tab.html">
+<link rel="import" href="bower_components/vaadin-icons/vaadin-icons.html">
+
+<dom-module id="main-layout">
+    <template>
+        <style>
+            #content {
+                flex: 1;
+                width: 100%;
+            }
+
+            #menu {
+                width: 100%;
+            }
+        </style>
+        <vaadin-vertical-layout style="width: 100%; height: 100%;">
+            <div id="content"></div>
+            <vaadin-tabs id="menu">
+                <a router-link href="">
+                    <vaadin-tab selected>
+                        <iron-icon icon="vaadin:foo"></iron-icon>Ticket</vaadin-tab>
+                </a>
+                <a router-link href="map">
+                    <vaadin-tab>
+                        <iron-icon icon="vaadin:map"></iron-icon>24h Map</vaadin-tab>
+                </a>
+                <a router-link href="shifts">
+                    <vaadin-tab>
+                        <iron-icon icon="vaadin:table"></iron-icon>Shifts</vaadin-tab>
+                </a>
+                <a router-link href="stats">
+                    <vaadin-tab>
+                        <iron-icon icon="vaadin:chart"></iron-icon>Stats</vaadin-tab>
+                </a>
+            </vaadin-tabs>
+        </vaadin-vertical-layout>
+    </template>
+    <script>
+        class MainView extends Polymer.Element {
+            static get is() {
+                return 'main-layout';
+            }
+        }
+        customElements.define(MainView.is, MainView);
+    </script>
+</dom-module>

@@ -1,0 +1,47 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/vaadin-charts/vaadin-chart.html">
+<link rel="import" href="../bower_components/vaadin-ordered-layout/vaadin-vertical-layout.html">
+
+<dom-module id="stats-view">
+	<template>
+		<style>
+			#header {
+				width: 100%;
+				height: 3em;
+				align-items: center;
+				justify-content: center;
+			}
+		</style>
+		<vaadin-vertical-layout>
+			<vaadin-horizontal-layout id="header">
+				<div>Stats</div>
+			</vaadin-horizontal-layout>
+			<vaadin-chart type="column" title="Tickets / day" additional-options='{"yAxis": {
+              "min": 0,
+              "title": "Total tickets"
+              }}'>
+				<vaadin-chart-series title="My tickets" values="[[myTickets]]"></vaadin-chart-series>
+				<vaadin-chart-series title="Other tickets" values="[[otherTickets]]"></vaadin-chart-series>
+			</vaadin-chart>
+		</vaadin-vertical-layout>
+	</template>
+	<script>
+		class StatsView extends Polymer.Element {
+			connectedCallback() {
+				super.connectedCallback();
+				this.myTickets = [[123, 1], [122, 2]];
+			}
+			static get is() {
+				return 'stats-view';
+			}
+			static get properties() {
+				return {
+					myTickets: {
+						name: 'myTickets',
+						type: Array
+					}
+				}
+			}
+		}
+		customElements.define(StatsView.is, StatsView);
+	</script> </dom-module>
