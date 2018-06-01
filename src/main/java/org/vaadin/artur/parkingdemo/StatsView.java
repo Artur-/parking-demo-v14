@@ -1,6 +1,10 @@
 package org.vaadin.artur.parkingdemo;
 
+import java.util.List;
+
 import org.vaadin.artur.parkingdemo.StatsView.StatsViewModel;
+import org.vaadin.artur.parkingdemo.backend.Backend;
+import org.vaadin.artur.parkingdemo.data.Ticket;
 
 import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.Tag;
@@ -15,6 +19,7 @@ import com.vaadin.flow.templatemodel.TemplateModel;
 public class StatsView extends PolymerTemplate<StatsViewModel> {
 
     public interface StatsViewModel extends TemplateModel {
+        void setTickets(List<Ticket> tickets);
     }
 
     public StatsView() {
@@ -23,6 +28,7 @@ public class StatsView extends PolymerTemplate<StatsViewModel> {
     @Override
     protected void onAttach(AttachEvent attachEvent) {
         super.onAttach(attachEvent);
+        getModel().setTickets(Backend.get().getTickets());
     }
 
 }

@@ -3,7 +3,7 @@ package org.vaadin.artur.parkingdemo;
 import java.util.List;
 
 import org.vaadin.artur.parkingdemo.ShiftsView.ShiftsViewModel;
-import org.vaadin.artur.parkingdemo.data.DataUtil;
+import org.vaadin.artur.parkingdemo.backend.Backend;
 import org.vaadin.artur.parkingdemo.data.Shift;
 
 import com.vaadin.flow.component.AttachEvent;
@@ -30,7 +30,7 @@ public class ShiftsView extends PolymerTemplate<ShiftsViewModel> {
     @Override
     protected void onAttach(AttachEvent attachEvent) {
         super.onAttach(attachEvent);
-        getModel().setShifts(DataUtil.generateRandomShifts());
+        getModel().setShifts(Backend.getShifts());
     }
 
 }

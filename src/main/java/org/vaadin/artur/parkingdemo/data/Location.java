@@ -5,7 +5,6 @@ import java.io.Serializable;
 public class Location implements Serializable {
     private double longitude;
     private double latitude;
-    private String address;
 
     public void setLatitude(double latitude) {
         this.latitude = latitude;
@@ -23,12 +22,9 @@ public class Location implements Serializable {
         return longitude;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
+    @Override
+    public String toString() {
+        return "[longitude=" + longitude + ", latitude=" + latitude + "]";
     }
 
 }

@@ -7,7 +7,6 @@
 		<geo-location id="geo" latitude="{{latitude}}" longitude="{{longitude}}"></geo-location>
 
 		<google-map api-key="AIzaSyBbWPVuPfYXeCBrPClqOfMT2b2DXr3f50Y" latitude="[[latitude]]" longitude="[[longitude]]">
-			<google-map-marker latitude="[[latitude]]" longitude="[[longitude]]"></google-map-marker>
 			<template is="dom-repeat" items="{{tickets}}">
 				<google-map-marker latitude="[[item.location.latitude]]" longitude="[[item.location.longitude]]"></google-map-marker>
 			</template>

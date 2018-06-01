@@ -12,24 +12,24 @@
     <template>
         <vaadin-vertical-layout>
             <vaadin-horizontal-layout style="width:100%;justify-content: space-between;align-items: center">
-                <vaadin-button id="clear">
+                <vaadin-button on-click="clear">
                     Clear
                 </vaadin-button>
                 <span>New Ticket</span>
-                <vaadin-button id="save">
+                <vaadin-button on-click="save">
                     Save
                 </vaadin-button>
             </vaadin-horizontal-layout>
             <vaadin-form-layout style="width: 100%" theme="spacing margin">
                 <div>Information</div>
-                <vaadin-checkbox>
+                <vaadin-checkbox on-change="myLocationChange" id="myLocation">
                     My location
                 </vaadin-checkbox>
-                <vaadin-date-picker style="width:100%" label="Time"></vaadin-date-picker>
-                <vaadin-text-field style="width:100%" label="Vehicle ID"></vaadin-text-field>
-                <vaadin-combo-box items="[[violations]]" style="width:100%" label="Violation"></vaadin-combo-box>
-                <vaadin-combo-box items="[[areas]]" style="width:100%" label="Area"></vaadin-combo-box>
-                <vaadin-text-area style="width:100%" label="Notes"></vaadin-text-area>
+                <vaadin-date-picker id="time" style="width:100%" label="Time"></vaadin-date-picker>
+                <vaadin-text-field id="vehicleId" style="width:100%" label="Vehicle ID"></vaadin-text-field>
+                <vaadin-combo-box id="violation" items="[[violations]]" style="width:100%" label="Violation"></vaadin-combo-box>
+                <vaadin-combo-box id="area" items="[[areas]]" style="width:100%" label="Area"></vaadin-combo-box>
+                <vaadin-text-area id="notes" style="width:100%" label="Notes"></vaadin-text-area>
             </vaadin-form-layout>
         </vaadin-vertical-layout>
     </template>
@@ -37,6 +37,48 @@
         class TicketView extends Polymer.Element {
             static get is() {
                 return 'ticket-view';
+            }
+            static get properties() {
+                return {
+                    "location": {
+                        type: Array,
+                        value: [-1,-1]
+                    }
+                };
+            }
+            connectedCallback() {
+                super.connectedCallback();
+                this.$.time._selectedDate = new Date();
+            }
+            myLocationChange() {
+                if (this.$.myLocation.checked) {
+                    navigator.geolocation.getCurrentPosition(position => {
+                        this.location = [position.coords.latitude, position.coords.longitude];
+                    });
+                }
+            }
+            save() {
+                const timeStamp = this.$.time._selectedDate ? this.$.time._selectedDate.getTime() : 0;
+                const ticket = {
+                    location: this.location,
+                    timeStamp: timeStamp,
+                    vehicleId: this.$.vehicleId.value,
+                    violation: this.$.violation.value,
+                    area: this.$.area.value,
+                    notes: this.$.notes.value,
+                    
+                };
+                this.saveTicket(ticket);
+                this.clear();
+            }
+            clear() {
+                const fields = [this.$.vehicleId, this.$.violation, this.$.area, this.$.notes];
+                fields.forEach(field => field.value='');
+
+                this.$.time._selectedDate = new Date();
+            }
+            saveTicket(ticket) {
+                this.$server.save(ticket);
             }
         }
         customElements.define(TicketView.is, TicketView);

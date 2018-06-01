@@ -3,7 +3,7 @@ package org.vaadin.artur.parkingdemo;
 import java.util.List;
 
 import org.vaadin.artur.parkingdemo.MapView.MapViewModel;
-import org.vaadin.artur.parkingdemo.data.DataUtil;
+import org.vaadin.artur.parkingdemo.backend.Backend;
 import org.vaadin.artur.parkingdemo.data.Ticket;
 
 import com.vaadin.flow.component.AttachEvent;
@@ -30,6 +30,6 @@ public class MapView extends PolymerTemplate<MapViewModel> {
     protected void onAttach(AttachEvent attachEvent) {
         super.onAttach(attachEvent);
 
-        getModel().setTickets(DataUtil.generateDummyTickets());
+        getModel().setTickets(Backend.get().getTickets());
     }
 }

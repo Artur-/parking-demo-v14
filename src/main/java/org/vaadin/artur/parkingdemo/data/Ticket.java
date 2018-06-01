@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 public class Ticket implements Serializable {
     private Location location = new Location();
-    // private Date timeStamp = new Date();
-    private String registerPlateNumber;
+    private double timeStamp = 0;
+    private String vehicleId;
     private String violation;
     private String area;
 
@@ -39,12 +39,12 @@ public class Ticket implements Serializable {
     // this.timeStamp = timeStamp;
     // }
 
-    public String getRegisterPlateNumber() {
-        return registerPlateNumber;
+    public String getVehicleId() {
+        return vehicleId;
     }
 
-    public void setRegisterPlateNumber(String registerPlateNumber) {
-        this.registerPlateNumber = registerPlateNumber;
+    public void setVehicleId(String registerPlateNumber) {
+        vehicleId = registerPlateNumber;
     }
 
     public String getViolation() {
@@ -97,6 +97,24 @@ public class Ticket implements Serializable {
 
     public void setThumbnailUrl(String thumbnailUrl) {
         this.thumbnailUrl = thumbnailUrl;
+    }
+
+    public double getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(double timeStamp) {
+        this.timeStamp = timeStamp;
+    }
+
+    @Override
+    public String toString() {
+        return "Ticket [location=" + location + ", timeStamp=" + timeStamp
+                + ", vehicleId=" + vehicleId + ", violation=" + violation
+                + ", area=" + area + ", imageUrl=" + imageUrl
+                + ", thumbnailUrl=" + thumbnailUrl + ", notes=" + notes
+                + ", imageIncluded=" + imageIncluded + ", myTicket=" + myTicket
+                + "]";
     }
 
 }

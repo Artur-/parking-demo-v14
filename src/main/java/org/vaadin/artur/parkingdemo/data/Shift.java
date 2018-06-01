@@ -1,6 +1,7 @@
 package org.vaadin.artur.parkingdemo.data;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Shift {
 
@@ -25,12 +26,12 @@ public class Shift {
         this.area = area;
     }
 
-    // public LocalDateTime getDate() {
-    // return date;
-    // }
-    //
-    public void ssetDate(LocalDateTime date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
+    }
+
+    public String getDate() {
+        return date.format(DateTimeFormatter.ISO_DATE);
     }
 
     public void ssetDurationMillis(long durationMillis) {
