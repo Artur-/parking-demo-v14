@@ -31,7 +31,7 @@ public class TicketView extends PolymerTemplate<TicketViewModel> {
     public interface TicketViewModel extends TemplateModel {
         public void setViolations(List<String> violations);
 
-        public void setAreas(List<String> violations);
+        public void setAreas(List<String> areas);
     }
 
     public TicketView() {
