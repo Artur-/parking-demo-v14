@@ -1,0 +1,51 @@
+<link rel="import" href="bower_components/polymer/polymer.html">
+
+<dom-module id="online-detector">
+    <template>
+        <style>
+            :host {
+                display: none;
+            }
+        </style>
+    </template>
+    <script>
+        class OnlineDetector extends Polymer.Element {
+            static get is() {
+                return 'online-detector';
+            }
+            static get properties() {
+                return {
+                    "networkOnline": {
+                        type: Boolean,
+                        value: navigator.onLine,
+                        notify: true
+                    },
+                    "appOnline": {
+                        type: Boolean,
+                        computed: 'isAppOnline(networkOnline)',
+                        notify: true
+                    },
+                }
+            }
+            connectedCallback() {
+                super.connectedCallback();
+                window.addEventListener("online", e => {
+                    this.networkOnline = navigator.onLine;
+                });
+                window.addEventListener("offline", e => {
+                    this.networkOnline = navigator.onLine;
+                });
+            }
+
+            isAppOnline(networkOnline) {
+                return networkOnline && this.flowStarted();
+            }
+
+            flowStarted() {
+                return !!window.Vaadin.Flow;
+            }
+
+        }
+        customElements.define(OnlineDetector.is, OnlineDetector);
+    </script>
+</dom-module>
