@@ -23,7 +23,7 @@
             <vaadin-form-layout style="width: 100%" theme="spacing margin">
                 <div>Information</div>
                 <vaadin-checkbox on-change="myLocationChange" id="myLocation">
-                    My location
+                    My location {{locationText}}
                 </vaadin-checkbox>
                 <vaadin-date-picker id="time" style="width:100%" label="Time"></vaadin-date-picker>
                 <vaadin-text-field id="vehicleId" style="width:100%" label="Vehicle ID"></vaadin-text-field>
@@ -43,7 +43,12 @@
                     "location": {
                         type: Array,
                         value: [-1,-1]
+                    },
+                    locationText: {
+                        type: String,
+                        value: ""
                     }
+
                 };
             }
             connectedCallback() {
@@ -52,9 +57,13 @@
             }
             myLocationChange() {
                 if (this.$.myLocation.checked) {
+                    this.locationText = " (locating...)";
                     navigator.geolocation.getCurrentPosition(position => {
                         this.location = [position.coords.latitude, position.coords.longitude];
+                        this.locationText = " (" + this.location.map(n=>n.toFixed(2)) + ")";
                     });
+                } else {
+                    this.locationText = "";
                 }
             }
             save() {
