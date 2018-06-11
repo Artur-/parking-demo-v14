@@ -9,20 +9,20 @@
         <style>
         </style>
         <online-detector id="detector"></online-detector>
-        <vaadin-tabs on-click="maybeNavigate" id="menu">
-            <a router-link href="">
+        <vaadin-tabs  id="menu">
+            <a on-click="maybeNavigate" router-link href="">
                 <vaadin-tab selected="[[_equals(route, '')]]">
                     <iron-icon icon="vaadin:ticket"></iron-icon>Ticket</vaadin-tab>
             </a>
-            <a router-link href="map">
+            <a on-click="maybeNavigate" router-link href="map">
                 <vaadin-tab selected="[[_equals(route, 'map')]]">
                     <iron-icon icon="vaadin:map-marker"></iron-icon>24h Map</vaadin-tab>
             </a>
-            <a router-link href="shifts">
+            <a on-click="maybeNavigate" router-link href="shifts">
                 <vaadin-tab selected="[[_equals(route, 'shifts')]]">
                     <iron-icon icon="vaadin:table"></iron-icon>Shifts</vaadin-tab>
             </a>
-            <a router-link href="stats">
+            <a on-click="maybeNavigate" router-link href="stats">
                 <vaadin-tab selected="[[_equals(route, 'stats')]]">
                     <iron-icon icon="vaadin:chart"></iron-icon>Stats</vaadin-tab>
             </a>
@@ -44,14 +44,25 @@
                 super.connectedCallback();
                 this.updateRoute();
                 this.hackPushState();
+                if (!this.$.detector.appOnline) {
+                    this.navigateOffline(window.location.href);
+                }
             }
             _equals(route, viewName) {
                 return route == viewName;
             }
-            maybeNavigate() {
+            maybeNavigate(e) {
                 if (!this.$.detector.appOnline) {
-                    console.log("Need to navigate");
+                    e.stopPropagation();
+                    e.preventDefault();
+                    this.navigateOffline(e.currentTarget.href);
                 }
+            }
+            navigateOffline(targetHref) {
+                const targetView = targetHref.replace(document.baseURI,"");
+                if (targetView == "map")
+                    return;
+                this.dispatchEvent(new CustomEvent('navigate', {detail: {view: targetView}}));
             }
             updateRoute() {
                 var p = window.location.pathname;
