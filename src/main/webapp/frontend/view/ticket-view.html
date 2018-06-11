@@ -67,18 +67,20 @@
                 }
             }
             save() {
+                const ticket = this.getCurrentFormTicket();
+                this.saveTicket(ticket);
+                this.clear();
+            }
+            getCurrentFormTicket() {
                 const timeStamp = this.$.time._selectedDate ? this.$.time._selectedDate.getTime() : 0;
-                const ticket = {
+                return {
                     location: this.location,
                     timeStamp: timeStamp,
                     vehicleId: this.$.vehicleId.value,
                     violation: this.$.violation.value,
                     area: this.$.area.value,
                     notes: this.$.notes.value,
-                    
                 };
-                this.saveTicket(ticket);
-                this.clear();
             }
             clear() {
                 const fields = [this.$.vehicleId, this.$.violation, this.$.area, this.$.notes];
