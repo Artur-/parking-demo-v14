@@ -1,5 +1,5 @@
 // Important: update the version each time you change any of the files listed below
-var version = 12;
+var version = 14;
 // define your offline-page and assets used by it
 var manifest = 'app.webmanifest';
 var offlinePage = 'offline.html';
@@ -140,13 +140,9 @@ var offlineAssets = [
 'frontend/bower_components/vaadin-item/src/vaadin-item.html',
 'frontend/bower_components/iron-list/iron-list.html',
 'frontend/bower_components/vaadin-combo-box/src/vaadin-combo-box-item.html',
-'frontend/bower_components/iron-overlay-behavior/iron-focusables-helper.html"',
 'frontend/bower_components/iron-overlay-behavior/iron-focusables-helper.html',
-'frontend/bower_components/vaadin-item/src/vaadin-item-mixin.html"',
-'frontend/bower_components/iron-scroll-target-behavior/iron-scroll-target-behavior.html"',
 'frontend/bower_components/vaadin-item/src/vaadin-item-mixin.html',
 'frontend/bower_components/iron-scroll-target-behavior/iron-scroll-target-behavior.html',
-'frontend/bower_components/vaadin-usage-statistics/vaadin-usage-statistics.html"',
 'frontend/bower_components/vaadin-usage-statistics/vaadin-usage-statistics.html',
 ]
 
