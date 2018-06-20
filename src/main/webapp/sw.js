@@ -1,5 +1,6 @@
 // Important: update the version each time you change any of the files listed below
-var version = 14;
+var version = 16;
+var cacheName = 'static' + version;
 // define your offline-page and assets used by it
 var manifest = 'app.webmanifest';
 var offlinePage = 'offline.html';
@@ -147,12 +148,11 @@ var offlineAssets = [
 ]
 
 function updateCache() {
-  return caches.open('static' + version)
-    .then(function (cache) {
-      cache.add(manifest);
-      cache.add(offlinePage);
-      cache.addAll(offlineAssets);
-    });
+  return caches.open(cacheName).then(cache => {
+    cache.add(manifest);
+    cache.add(offlinePage);
+    cache.addAll(offlineAssets);
+  });
 }
 
 self.addEventListener('install', function (event) {
@@ -172,20 +172,22 @@ self.addEventListener('fetch', function (event) {
   if (doesRequestAcceptHtml(request)) {
     // HTML pages fallback to offline page
     event.respondWith(
-      fetch(request)
-        .catch(function () {
-          return caches.match(offlinePage);
-        })
+      fetch(request).catch(function () {
+        return caches.open(cacheName).then(cache => {
+          return cache.match(offlinePage);
+        });
+      })
     );
   } else {
     if (request.cache === 'only-if-cached' && request.mode !== 'same-origin') {
       return;
     }
+
     event.respondWith(
-      caches.match(request)
-        .then(function (response) {
+      caches.open(cacheName).then(cache => {
+        return cache.match(request).then(response => {
           return response || fetch(request);
         })
-    );
+      }));
   }
 });
