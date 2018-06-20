@@ -45,9 +45,24 @@
 		class ShiftsView extends Polymer.Element {
 			connectedCallback() {
 				super.connectedCallback();
+				if (!this.shifts) {
+					this.shifts = JSON.parse(localStorage.getItem("shifts")) || [];
+				}
 			}
 			static get is() {
 				return 'shifts-view';
+			}
+			static get properties() {
+				return {
+					shifts: {
+						type: Array,
+						value: undefined,
+						observer: 'shiftsChanged'
+					}
+				}
+			}
+			shiftsChanged() {
+				localStorage.setItem("shifts", JSON.stringify(this.shifts));
 			}
 		}
 		customElements.define(ShiftsView.is, ShiftsView);
