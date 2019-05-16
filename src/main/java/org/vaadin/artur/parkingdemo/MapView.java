@@ -1,35 +1,18 @@
 package org.vaadin.artur.parkingdemo;
 
-import java.util.List;
-
-import org.vaadin.artur.parkingdemo.MapView.MapViewModel;
 import org.vaadin.artur.parkingdemo.backend.Backend;
-import org.vaadin.artur.parkingdemo.data.Ticket;
 
-import com.vaadin.flow.component.AttachEvent;
+import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Tag;
-import com.vaadin.flow.component.dependency.HtmlImport;
-import com.vaadin.flow.component.polymertemplate.PolymerTemplate;
+import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.templatemodel.TemplateModel;
 
 @Route(value = "map", layout = MainLayout.class)
-@HtmlImport("view/map-view.html")
+@JsModule("view/map-view.js")
 @Tag("map-view")
-public class MapView extends PolymerTemplate<MapViewModel> {
-
-    public interface MapViewModel extends TemplateModel {
-        void setTickets(List<Ticket> tickets);
-
-    }
+public class MapView extends Component {
 
     public MapView() {
-    }
-
-    @Override
-    protected void onAttach(AttachEvent attachEvent) {
-        super.onAttach(attachEvent);
-
-        getModel().setTickets(Backend.get().getTickets());
+        getElement().setPropertyJson("tickets", Util.toJson(Backend.get().getTickets()));
     }
 }
